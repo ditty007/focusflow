@@ -2,6 +2,13 @@
 
 A privacy-first task management application built with the Eisenhower Matrix framework. **Your data never leaves your device** - everything is stored locally in your browser.
 
+## 🔗 Quick Links
+
+- **Live Demo**: https://focusflow-liart-two.vercel.app
+- **Report Issues**: [GitHub Issues](https://github.com/YOUR_USERNAME/focusflow/issues)
+- **Contribute**: See [CONTRIBUTING.md](CONTRIBUTING.md)
+- **License**: [MIT](LICENSE)
+
 ## 🔒 Privacy-First Design
 
 **FocusFlow is designed with privacy as the core principle:**
@@ -110,18 +117,42 @@ npm run test:ui       # Run tests with UI
 npm run test:coverage # Generate coverage report
 ```
 
-## 📝 License
-
-This project is open source and available under the MIT License.
-
 ## 🤝 Contributing
 
-Contributions are welcome! Please ensure:
-- All tests pass
-- Code coverage remains high
-- Security best practices are followed
-- Privacy-first principles are maintained
+We love contributions! FocusFlow is built by the community for the community.
 
----
+**Before contributing, please:**
+1. Read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
+2. Check [existing issues](https://github.com/YOUR_USERNAME/focusflow/issues)
+3. Ensure all tests pass and coverage remains high
+4. Maintain privacy-first principles
+
+### Areas We'd Love Help With
+- 🎨 UI/UX improvements
+- ♿ Accessibility enhancements
+- 🌍 Internationalization (i18n)
+- 📱 Mobile optimizations
+- ⌨️ Keyboard shortcuts
+- 🎨 Dark mode
+- 📊 Additional export formats
+
+See our [issues page](https://github.com/YOUR_USERNAME/focusflow/issues) for tasks marked "good first issue" or "help wanted".
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🌟 Star History
+
+If you find FocusFlow useful, please consider giving it a star ⭐ on GitHub!
+
+## 💬 Community
+
+- **Discussions**: Share ideas and ask questions in [GitHub Discussions](https://github.com/YOUR_USERNAME/focusflow/discussions)
+- **Issues**: Report bugs or request features in [GitHub Issues](https://github.com/YOUR_USERNAME/focusflow/issues)
+
+## 🙏 Acknowledgments
 
 Built with privacy in mind. Your data is yours alone.
+
+Created with [Claude Code](https://claude.com/claude-code)
