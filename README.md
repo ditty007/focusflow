@@ -5,7 +5,8 @@ A privacy-first task management application built with the Eisenhower Matrix fra
 ## 🔗 Quick Links
 
 - **Live Demo**: https://focusflow-liart-two.vercel.app
-- **Report Issues**: [GitHub Issues](https://github.com/YOUR_USERNAME/focusflow/issues)
+- **GitHub**: https://github.com/ditty007/focusflow
+- **Report Issues**: [GitHub Issues](https://github.com/ditty007/focusflow/issues)
 - **Contribute**: See [CONTRIBUTING.md](CONTRIBUTING.md)
 - **License**: [MIT](LICENSE)
 
@@ -123,7 +124,7 @@ We love contributions! FocusFlow is built by the community for the community.
 
 **Before contributing, please:**
 1. Read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
-2. Check [existing issues](https://github.com/YOUR_USERNAME/focusflow/issues)
+2. Check [existing issues](https://github.com/ditty007/focusflow/issues)
 3. Ensure all tests pass and coverage remains high
 4. Maintain privacy-first principles
 
@@ -136,7 +137,7 @@ We love contributions! FocusFlow is built by the community for the community.
 - 🎨 Dark mode
 - 📊 Additional export formats
 
-See our [issues page](https://github.com/YOUR_USERNAME/focusflow/issues) for tasks marked "good first issue" or "help wanted".
+See our [issues page](https://github.com/ditty007/focusflow/issues) for tasks marked "good first issue" or "help wanted".
 
 ## 📝 License
 
@@ -148,8 +149,8 @@ If you find FocusFlow useful, please consider giving it a star ⭐ on GitHub!
 
 ## 💬 Community
 
-- **Discussions**: Share ideas and ask questions in [GitHub Discussions](https://github.com/YOUR_USERNAME/focusflow/discussions)
-- **Issues**: Report bugs or request features in [GitHub Issues](https://github.com/YOUR_USERNAME/focusflow/issues)
+- **Discussions**: Share ideas and ask questions in [GitHub Discussions](https://github.com/ditty007/focusflow/discussions)
+- **Issues**: Report bugs or request features in [GitHub Issues](https://github.com/ditty007/focusflow/issues)
 
 ## 🙏 Acknowledgments
 
