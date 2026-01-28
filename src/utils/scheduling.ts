@@ -1,14 +1,6 @@
 import type { Task, SchedulingRules, ValidationError, DailyLimits } from "../types";
 import { getDay, parseISO } from "date-fns";
-
-// Default scheduling rules per PRD
-export const DEFAULT_SCHEDULING_RULES: SchedulingRules = {
-  monday: { totalHours: 5, urgentImportantTasks: 3, importantTasks: 2 },
-  tuesday: { totalHours: 5, urgentImportantTasks: 3, importantTasks: 2 },
-  wednesday: { totalHours: 5, urgentImportantTasks: 3, importantTasks: 2 },
-  thursday: { totalHours: 5, urgentImportantTasks: 3, importantTasks: 2 },
-  friday: { totalHours: 5, urgentImportantTasks: 1, importantTasks: 4 },
-};
+import { loadSchedulingRules } from "./settings";
 
 export const getDayName = (date: Date): keyof SchedulingRules => {
   const dayIndex = getDay(date);
@@ -27,7 +19,8 @@ export const getDayName = (date: Date): keyof SchedulingRules => {
 export const getDailyLimits = (date: string): DailyLimits => {
   const parsedDate = parseISO(date);
   const dayName = getDayName(parsedDate);
-  return DEFAULT_SCHEDULING_RULES[dayName];
+  const rules = loadSchedulingRules();
+  return rules[dayName];
 };
 
 export const calculateTaskTime = (task: Task): number => {

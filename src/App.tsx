@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DndContext, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import type { DragEndEvent, DragStartEvent } from "@dnd-kit/core";
+import { Analytics } from "@vercel/analytics/react";
 import { useTasks } from "./hooks/useTasks";
 import { useSpaces } from "./hooks/useSpaces";
 import { getCurrentWeekStart, getNextWeekStartFromDate, getPreviousWeekStart, formatWeekLabel, getWeekDays } from "./utils/dates";
@@ -11,12 +12,14 @@ import WeekView from "./components/WeekView";
 import Sidebar from "./components/Sidebar";
 import Backlog from "./components/Backlog";
 import TaskModal from "./components/TaskModal";
+import SettingsModal from "./components/SettingsModal";
 import CompletedTasksHistory from "./components/CompletedTasksHistory";
 import type { Task, BacklogType } from "./types";
 
 function App() {
   const [currentWeek, setCurrentWeek] = useState<Date>(getCurrentWeekStart());
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [modalInitialDay, setModalInitialDay] = useState<string | undefined>();
   const [modalInitialBacklog, setModalInitialBacklog] = useState<BacklogType | undefined>();
   const [editingTask, setEditingTask] = useState<Task | undefined>();
@@ -142,6 +145,7 @@ function App() {
           onToday={handleToday}
           onExport={exportTasks}
           onImport={importTasks}
+          onOpenSettings={() => setIsSettingsOpen(true)}
           spaces={spaces}
           activeSpaceId={activeSpaceId}
           onSpaceChange={setActiveSpaceId}
@@ -241,7 +245,17 @@ function App() {
             }
           />
         )}
+
+        <SettingsModal
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          onSave={() => {
+            // Settings are automatically saved by the modal
+            // We might want to trigger a re-render or show a success message
+          }}
+        />
       </div>
+      <Analytics />
     </DndContext>
   );
 }

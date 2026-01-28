@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import type { Task } from "../types";
 import TaskCard from "./TaskCard";
 import clsx from "clsx";
-import { calculateTaskTime } from "../utils/scheduling";
+import { calculateTaskTime, getDailyLimits } from "../utils/scheduling";
 import { Plus } from "lucide-react";
 
 interface DayColumnProps {
@@ -25,6 +25,7 @@ const DayColumn = ({ date, tasks, onDayClick, onTaskClick, onToggleComplete }: D
   });
 
   const totalHours = tasks.reduce((sum, task) => sum + calculateTaskTime(task), 0);
+  const dailyLimits = getDailyLimits(dateString);
 
   return (
     <div className="flex-1 flex flex-col border-r border-gray-200 last:border-r-0 min-w-0">
@@ -44,7 +45,7 @@ const DayColumn = ({ date, tasks, onDayClick, onTaskClick, onToggleComplete }: D
           {dayNumber}
         </div>
         <div className="text-xs text-gray-500 mt-1">
-          {totalHours}h / 5h
+          {totalHours}h / {dailyLimits.totalHours}h
         </div>
       </div>
 

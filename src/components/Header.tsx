@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Download, Upload } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, Upload, Settings } from "lucide-react";
 import { useRef, useState } from "react";
 import SpaceSwitcher from "./SpaceSwitcher";
 import type { Space, Task } from "../types";
@@ -10,6 +10,7 @@ interface HeaderProps {
   onToday: () => void;
   onExport: () => void;
   onImport: (file: File) => Promise<void>;
+  onOpenSettings: () => void;
   // Space switcher props
   spaces: Space[];
   activeSpaceId: string;
@@ -28,6 +29,7 @@ const Header = ({
   onToday,
   onExport,
   onImport,
+  onOpenSettings,
   spaces,
   activeSpaceId,
   onSpaceChange,
@@ -96,6 +98,15 @@ const Header = ({
             >
               <Upload className="w-4 h-4" />
               Import
+            </button>
+
+            <button
+              onClick={onOpenSettings}
+              className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded transition"
+              title="Settings"
+            >
+              <Settings className="w-4 h-4" />
+              Settings
             </button>
 
             <input
