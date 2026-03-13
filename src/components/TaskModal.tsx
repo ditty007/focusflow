@@ -44,12 +44,12 @@ const TaskModal = ({
   currentSpaceId,
   onMoveToSpace,
 }: TaskModalProps) => {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState<TaskCategory>("neither");
-  const [timeEstimate, setTimeEstimate] = useState(1);
-  const [notes, setNotes] = useState("");
-  const [stakeholder, setStakeholder] = useState("");
-  const [subtasks, setSubtasks] = useState<Subtask[]>([]);
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [category, setCategory] = useState<TaskCategory>(initialData?.category || "neither");
+  const [timeEstimate, setTimeEstimate] = useState(initialData?.timeEstimate || 1);
+  const [notes, setNotes] = useState(initialData?.notes || "");
+  const [stakeholder, setStakeholder] = useState(initialData?.stakeholder || "");
+  const [subtasks, setSubtasks] = useState<Subtask[]>(initialData?.subtasks || []);
   const [newSubtaskTitle, setNewSubtaskTitle] = useState("");
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const TaskModal = ({
       setStakeholder("");
       setSubtasks([]);
     }
-  }, [initialData, isOpen]);
+  }, [initialData]);
 
   const handleSave = () => {
     if (!title.trim()) return;

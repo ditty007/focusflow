@@ -365,6 +365,165 @@ describe('useTasks', () => {
     expect(result.current.tasks[0].title).toBe('Existing Task');
   });
 
+  // ── Notes persistence tests (regression for the move-task bug) ────────────
+
+  it('should preserve notes when moving task to a new day', () => {
+    const { result } = renderHook(() => useTasks('default'));
+
+    let taskId: string;
+    act(() => {
+      const task = result.current.addTask('Task with notes', 'important', 1, '2024-01-15');
+      taskId = task.id;
+    });
+
+    act(() => {
+      result.current.updateTask(taskId, { notes: 'keep me around' });
+    });
+
+    act(() => {
+      result.current.moveTask(taskId, '2024-01-20');
+    });
+
+    const moved = result.current.tasks.find(t => t.id === taskId);
+    expect(moved?.scheduledDay).toBe('2024-01-20');
+    expect(moved?.notes).toBe('keep me around');
+  });
+
+  it('should preserve notes when moving task to backlog', () => {
+    const { result } = renderHook(() => useTasks('default'));
+
+    let taskId: string;
+    act(() => {
+      const task = result.current.addTask('Task with notes', 'important', 1, '2024-01-15');
+      taskId = task.id;
+    });
+
+    act(() => {
+      result.current.updateTask(taskId, { notes: 'backlog notes' });
+    });
+
+    act(() => {
+      result.current.moveTask(taskId, undefined, 'next-week');
+    });
+
+    const moved = result.current.tasks.find(t => t.id === taskId);
+    expect(moved?.backlogType).toBe('next-week');
+    expect(moved?.scheduledDay).toBeUndefined();
+    expect(moved?.notes).toBe('backlog notes');
+  });
+
+  it('should preserve notes when moving task from backlog to a day', () => {
+    const { result } = renderHook(() => useTasks('default'));
+
+    let taskId: string;
+    act(() => {
+      const task = result.current.addTask('Backlog task with notes', 'urgent', 1, undefined, 'monitor');
+      taskId = task.id;
+    });
+
+    act(() => {
+      result.current.updateTask(taskId, { notes: 'from the monitor pile' });
+    });
+
+    act(() => {
+      result.current.moveTask(taskId, '2024-01-22');
+    });
+
+    const moved = result.current.tasks.find(t => t.id === taskId);
+    expect(moved?.scheduledDay).toBe('2024-01-22');
+    expect(moved?.backlogType).toBeUndefined();
+    expect(moved?.notes).toBe('from the monitor pile');
+  });
+
+  it('should preserve notes across multiple moves', () => {
+    const { result } = renderHook(() => useTasks('default'));
+
+    let taskId: string;
+    act(() => {
+      const task = result.current.addTask('Nomadic task', 'neither', 1, '2024-01-15');
+      taskId = task.id;
+    });
+
+    act(() => {
+      result.current.updateTask(taskId, { notes: 'persists through all moves' });
+    });
+
+    act(() => { result.current.moveTask(taskId, '2024-01-16'); });
+    act(() => { result.current.moveTask(taskId, undefined, 'next-month'); });
+    act(() => { result.current.moveTask(taskId, '2024-01-22'); });
+
+    const final = result.current.tasks.find(t => t.id === taskId);
+    expect(final?.notes).toBe('persists through all moves');
+    expect(final?.scheduledDay).toBe('2024-01-22');
+  });
+
+  it('should preserve notes when moving task to a different space', () => {
+    const { result } = renderHook(() => useTasks('space1'));
+
+    let taskId: string;
+    act(() => {
+      const task = result.current.addTask('Cross-space task', 'important', 1, '2024-01-15');
+      taskId = task.id;
+    });
+
+    act(() => {
+      result.current.updateTask(taskId, { notes: 'space move notes' });
+    });
+
+    act(() => {
+      result.current.moveTaskToSpace(taskId, 'space2');
+    });
+
+    const moved = result.current.allTasks.find(t => t.id === taskId);
+    expect(moved?.spaceId).toBe('space2');
+    expect(moved?.notes).toBe('space move notes');
+  });
+
+  it('updateTask with notes:undefined explicitly clears notes (user intent)', () => {
+    const { result } = renderHook(() => useTasks('default'));
+
+    let taskId: string;
+    act(() => {
+      const task = result.current.addTask('Task', 'important', 1, '2024-01-15');
+      taskId = task.id;
+    });
+
+    act(() => {
+      result.current.updateTask(taskId, { notes: 'original' });
+    });
+
+    act(() => {
+      result.current.updateTask(taskId, { notes: undefined });
+    });
+
+    const updated = result.current.tasks.find(t => t.id === taskId);
+    expect(updated?.notes).toBeUndefined();
+  });
+
+  it('updateTask with only non-notes fields does not touch notes', () => {
+    const { result } = renderHook(() => useTasks('default'));
+
+    let taskId: string;
+    act(() => {
+      const task = result.current.addTask('Task', 'important', 1, '2024-01-15');
+      taskId = task.id;
+    });
+
+    act(() => {
+      result.current.updateTask(taskId, { notes: 'preserved' });
+    });
+
+    act(() => {
+      result.current.updateTask(taskId, { title: 'Renamed Task', category: 'urgent' });
+    });
+
+    const updated = result.current.tasks.find(t => t.id === taskId);
+    expect(updated?.title).toBe('Renamed Task');
+    expect(updated?.notes).toBe('preserved');
+  });
+
+  // ── End notes persistence tests ────────────────────────────────────────────
+
   it('should handle import errors', async () => {
     const { result } = renderHook(() => useTasks('default'));
     const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});

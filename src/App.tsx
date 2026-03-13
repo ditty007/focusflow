@@ -207,6 +207,7 @@ function App() {
 
         {isModalOpen && (
           <TaskModal
+            key={editingTask?.id || 'new'}
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onSave={(taskData) => {
